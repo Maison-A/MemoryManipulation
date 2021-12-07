@@ -8,6 +8,7 @@
 // -------------------------------------------------------------------------------- //
 #include <stdlib.h>
 #include <iostream>
+#include <string.h>
 #include "CSuperString.h"
 using namespace std;
 
@@ -28,8 +29,8 @@ using namespace std;
 //									PROTOTYPES
 // --------------------------------------------------------------------------- //
 void ConstructorTests();
-
-
+void ConstCharReturns();
+void ToDataTypeTests();
 // --------------------------------------------------------------------------- //
 //									MAIN
 // --------------------------------------------------------------------------- //
@@ -38,6 +39,13 @@ void main()
 {
 	ConstructorTests();
 	
+	cout << endl;
+
+	ToDataTypeTests();
+
+	cout << endl;
+
+	ConstCharReturns();
 
 
 
@@ -49,7 +57,7 @@ void main()
 
 // -------------------------------------------------------------------------------- //
 // Name: ConstructorTests
-// Abstract: 
+// Abstract: test initialize/constructor methods
 // -------------------------------------------------------------------------------- //
 void ConstructorTests()
 {
@@ -64,8 +72,8 @@ void ConstructorTests()
 	CSuperString ssSource6a((int)INT_MAX);
 	CSuperString ssSource7a((long)LONG_MIN);
 	CSuperString ssSource7b((long)LONG_MAX);
-	CSuperString ssSource8a((float)FLT_MAX);
-	CSuperString ssSource8b((float)FLT_MIN);
+	CSuperString ssSource8a((float)FLT_MIN);
+	CSuperString ssSource8b((float)FLT_MAX);
 	CSuperString ssSource9a((double)DBL_MIN);
 	CSuperString ssSource9b((double)DBL_MAX);
 	CSuperString ssSource10(ssSource2);
@@ -98,7 +106,7 @@ void ConstructorTests()
 
 // -------------------------------------------------------------------------------- //
 // Name: ToDataTypeTests
-// Abstract: 
+// Abstract: test methods that change data types
 // -------------------------------------------------------------------------------- //
 void ToDataTypeTests()
 {
@@ -120,21 +128,45 @@ void ToDataTypeTests()
 	// --------------------------------------------------------------------------- //
 	//								TO<DATATYPE>
 	// --------------------------------------------------------------------------- //
-	cout << "CONSTRUCTORS\n" << endl;
+	cout << "TO DATA TYPES\n" << endl;
 	cout << "--------------------------------------"	<< endl;
 	cout << "1a: bool	(false)			->			"	<< ssSource1a.ToBoolean() << endl;
-	cout << "1b: bool	(true)			->			"		<< ssSource1b.ToBoolean() << endl;
+	cout << "1b: bool	(true)			->			"	<< ssSource1b.ToBoolean() << endl;
 	cout << "3a: short	(MIN)			->			"	<< ssSource2a.ToShort() << endl;
 	cout << "3b: short	(MAX)			->			"	<< ssSource2b.ToShort() << endl;
-	cout << "4a: int	(MIN)			->			"		<< ssSource3a.ToInteger() << endl;
-	cout << "4b: int	(MAX)			->			"	<< ssSource3b.ToInteger() << endl;
+	cout << "4a: int		(MIN)			->			"	<< ssSource3a.ToInteger() << endl;
+	cout << "4b: int		(MAX)			->			"	<< ssSource3b.ToInteger() << endl;
 	cout << "5a: long	(MIN)			->			"	<< ssSource4a.ToLong() << endl;
 	cout << "5b: long	(MAX)			->			"	<< ssSource4b.ToLong() << endl;
 	cout << "6a: float	(MIN)			->			"	<< ssSource5a.ToFloat() << endl;
 	cout << "6b: float	(MAX)			->			"	<< ssSource5b.ToFloat() << endl;
+}
 
 
 
+// -------------------------------------------------------------------------------- //
+// Name: ConstCharReturns
+// Abstract: test methods that return const char*
+// -------------------------------------------------------------------------------- //
+void ConstCharReturns()
+{
+	CSuperString ssSource1 = "I Love Tarkov";
 
+	cout << "Const char Return Tests" << endl;
+	cout << "---------------------------" << endl;
+	// while loop to demonstrate mem leak is handled
+	//while (true)
+	//{
+	//	ssSource1.ToUpperCase();
+	//}
+	cout << "1: ToUpperCase -> '" << ssSource1.ToUpperCase().ToString() << "'" << endl;
+	cout << endl;
+	cout << "2: ToLowerCase -> '" << ssSource1.ToLowerCase().ToString() << "'" << endl;
+	cout << endl;
+	cout << "3a: Left(4) -> '" << ssSource1.Left(4).ToString() << "'" << endl;
+	cout << "3b: Left(7) -> '" << ssSource1.Left(7).ToString() << "'" << endl;
+	//cout << "4a: Right(7) -> '" << ssSource1.Right(6).ToString() << "'" << endl;
+	//cout << "4b: Right(2) -> '" << ssSource1.Right(2).ToString() << "'" << endl;
+	cout << "x: Original assigned to self -> '"  << endl;
 
 }

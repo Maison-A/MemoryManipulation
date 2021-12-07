@@ -139,9 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CNode.h" />
+    <ClInclude Include="CQueue.h" />
     <ClInclude Include="CSuperString.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CNode.cpp" />
+    <ClCompile Include="CQueue.cpp" />
     <ClCompile Include="CSuperString.cpp" />
     <ClCompile Include="SET252Final_Main.cpp" />
   </ItemGroup>

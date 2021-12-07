@@ -1,15 +1,20 @@
-// --------------------------------------------------------------------------------
-// Name: 
-// Abstract: 
-// --------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------- \\
+// Name: CSuperString
+// Abstract: final exam super string class
+// -------------------------------------------------------------------------------- \\
+
 // -------------------------------------------------------------------------------- //
-//										Includes
+//										DIRECTIVES
 // -------------------------------------------------------------------------------- //
 #include "CSuperString.h";
 #include <iostream>
+#include <string.h>
+#include "CQueue.h"
+
 using namespace std;
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable : 4996)
+
 #pragma region "Constructors"
 // -------------------------------------------------------------------------------- //
 // Name: CSuperString
@@ -168,6 +173,8 @@ CSuperString::CSuperString(const CSuperString &ssStringToCopy)
 void CSuperString::Initialize(const char* pstrSource)
 {
 	m_pstrSuperString = 0;
+	
+	// set class level pointers to 0 and be sure to clean up in destructor
 
 	// all memory allocation through the assignment operator
 	*this = pstrSource;
@@ -193,6 +200,7 @@ CSuperString::~CSuperString()
 	void CSuperString::CleanUp()
 	{
 		DeleteString(m_pstrSuperString);
+
 	}
 	
 
@@ -213,7 +221,7 @@ CSuperString::~CSuperString()
 			}
 #pragma endregion
 
-#pragma region "operators"
+#pragma region "Operators"
 // -------------------------------------------------------------------------------- //
 // Name: operator = 
 // Abstract: assignment operator
@@ -240,6 +248,115 @@ void CSuperString::operator = (const char* pstrSource)
 		DeepCopy(pstrSource);
 	}
 }
+
+
+// -------------------------------------------------------------------------------- //
+// Name: operator += 
+// Abstract: Concatenate operator
+// -------------------------------------------------------------------------------- //
+void CSuperString::operator += (const char* pstrStringToAppend)
+{
+
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: operator += 
+// Abstract: Concatenate operator
+// -------------------------------------------------------------------------------- //
+void CSuperString::operator += (const char chrCharacterToAppend)
+{
+
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: operator += 
+// Abstract: Concatenate operator
+// -------------------------------------------------------------------------------- //
+void CSuperString::operator += (const CSuperString& ssStringToAppend)
+{
+
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //
+//void operator + (const CSuperString &ssLeft, const CSuperString &ssRight)
+//{
+
+//}
+#pragma endregion
+
+#pragma region "Index Finding"
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //
+long CSuperString::FindFirstIndexOf(const char chrLetterToFind)
+{
+	return 0;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //
+long CSuperString::FindFirstIndexOf(const char chrLetterToFind, long lngStartIndex)
+{
+	return 0;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //
+long CSuperString::FindLastIndexOf(const char chrLetterToFind)
+{
+	return 0;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //
+long FindFirstIndexOf(const char* pstrSubStringToFind)
+{
+	return 0;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //
+long FindFirstIndexOf(const char* pstrSubStringToFind, long lngStartIndex)
+{
+	return 0;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //
+long FindLastIndexOf(const char* pstrSubStringToFind)
+{
+	return 0;
+}
 #pragma endregion
 
 #pragma region "String Manipulation"
@@ -247,19 +364,191 @@ void CSuperString::operator = (const char* pstrSource)
 // Name: ToUpperCase
 // Abstract: return pointer to uppercase version of string
 // -------------------------------------------------------------------------------- //
-const char* CSuperString::ToUpperCase()
+CSuperString CSuperString::ToUpperCase()
 {
-	char* pstrUpperCase = 0;
 
-	// make copy of super string
-	// every call to new must be paired with call to delete
-	// the instantce that made the call to new should be the one to call delete
-	pstrUpperCase = CloneString(m_pstrSuperString);
+	CSuperString ssToUpperCase;
 
-	// upper case it(get to use built in funcs!)
-	strupr(pstrUpperCase);
+	ssToUpperCase = m_pstrSuperString;
+	
+	// upper case it (we get to use built in funcs!)
+	strupr(ssToUpperCase.m_pstrSuperString);
 
-	return pstrUpperCase;
+	return ssToUpperCase;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: ToLowerCase
+// Abstract: return pointer to lowercase version of string
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::ToLowerCase()
+{
+
+	CSuperString ssToLowerCase;
+	ssToLowerCase = m_pstrSuperString;
+
+	// transform to lower case
+	strlwr(ssToLowerCase.m_pstrSuperString);
+
+	return ssToLowerCase;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: TrimLeft
+// Abstract: Trim off the left white space of the string
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::TrimLeft()
+{
+	
+	return 0;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: TrimRight
+// Abstract: Trim off the right white space of the string
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::TrimRight()
+{
+
+	return 0;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: Trim
+// Abstract: Trim the white space of the string
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::Trim()
+{
+
+	return 0;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: Reverse
+// Abstract: Reverse the string
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::Reverse()
+{
+	
+	return 0;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: Left
+// Abstract: return from left to right number of chars
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::Left(long lngCharactersToCopy)
+{
+	CSuperString ssLeft;
+	ssLeft = SubString(0, lngCharactersToCopy);
+	return ssLeft;
+	
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: Right
+// Abstract: return from right to left given number of chars
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::Right(long lngCharactersToCopy)
+{
+	// strncat_s();
+	CSuperString ssRight;
+	long lngLength = 0;
+	int intStart = 0;
+
+	// check your bounds
+	lngLength = Length();
+	
+	if (lngCharactersToCopy < 0)
+	{
+		lngCharactersToCopy = 0;
+	}
+
+	// set number of chars to copy to length of string if number is greater than string
+	if (lngCharactersToCopy > lngLength)
+	{
+		lngCharactersToCopy = lngLength;
+	}
+
+	intStart = lngLength - lngCharactersToCopy;
+
+
+	// make some space 
+	ssRight = new char[lngCharactersToCopy + 1];
+
+	//for (int intIndex = intStart; intIndex <= lngLength; intIndex++)
+	//{
+	//	// start copy at 
+	//	(ssRight + intIndex) = *(m_pstrSuperString + intIndex);
+	//}
+	//
+
+	return ssRight;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: Substring
+// Abstract: Create a substring of the super string
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::Substring(long lngStart, long lngSubStringLength)
+{
+
+	char* pstrLeft = 0;
+	long lngLength = 0;
+
+	// check your bounds
+	lngLength = Length();
+	if (lngCharactersToCopy < 0)
+	{
+		lngCharactersToCopy = 0;
+	}
+	if (lngCharactersToCopy > lngLength)
+	{
+		lngCharactersToCopy = lngLength;
+	}
+
+
+	// make some space 
+	pstrLeft = new char[lngCharactersToCopy + 1];
+
+	// copy the proper amount of characters - str N <--- copies "n" number of chars
+	strncpy_s(pstrLeft, lngCharactersToCopy + 1, m_pstrSuperString, lngCharactersToCopy);
+
+
+	//clean up and assign
+	ssLeft.CleanUp();
+	ssLeft.m_pstrSuperString = pstrLeft;
+
+
+	return pstrLeft;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: Replace
+// Abstract: Replace specified chars with given chars
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::Replace(char chrLetterToFind, char chrReplace)
+{
+
+	return 0;
 }
 #pragma endregion
 
@@ -283,12 +572,12 @@ bool CSuperString::ToBoolean()
 {
 	bool blnValue = false;
 
-	if (strcmp(ToLowerCase(), "true") == 0)
+	if (strcmp(ToLowerCase().ToString(), "true") == 0)
 	{
 		blnValue = true;
 	}
 	
-	else if (strcmp(ToLowerCase(), "1") == 0)
+	else if (strcmp(ToLowerCase().ToString(), "1") == 0)
 	{
 		blnValue = true;
 	}
@@ -384,6 +673,7 @@ double CSuperString::ToDouble()
 long CSuperString::Length() const
 {
 	long lngLength = 0;
+	
 	lngLength = (long)strlen(m_pstrSuperString);
 
 	return lngLength;

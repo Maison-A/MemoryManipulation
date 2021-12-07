@@ -18,12 +18,24 @@
     <ClInclude Include="CSuperString.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CSuperString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SET252Final_Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
