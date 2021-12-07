@@ -226,10 +226,11 @@ CSuperString::~CSuperString()
 // Name: operator = 
 // Abstract: assignment operator
 // -------------------------------------------------------------------------------- //
-void CSuperString::operator = (const char chrLetterToCopy)
+CSuperString& CSuperString::operator = (const char chrLetterToCopy)
 {
 	char strSource[2] = { chrLetterToCopy, 0 };
 	*this = strSource;
+	return *this;
 }
 
 
@@ -238,17 +239,28 @@ void CSuperString::operator = (const char chrLetterToCopy)
 // Name: operator = 
 // Abstract: assignment operator
 // -------------------------------------------------------------------------------- //
-void CSuperString::operator = (const char* pstrSource)
+CSuperString &CSuperString::operator = (const char* pstrSource)
 {
-	// check if self assigned 
-	if (m_pstrSuperString != pstrSource)
-	{
-		CleanUp();
 
-		DeepCopy(pstrSource);
-	}
+	DeepCopy(pstrSource);
+	
+	return *this;
 }
 
+
+
+// -------------------------------------------------------------------------------- //
+// Name: operator = 
+// Abstract: assignment operator
+// -------------------------------------------------------------------------------- //
+CSuperString& CSuperString::operator = (const CSuperString &ssStringToCopy)
+{
+
+	DeepCopy(ssStringToCopy.m_pstrSuperString);
+
+	return *this;
+}
+;
 
 // -------------------------------------------------------------------------------- //
 // Name: operator += 
@@ -278,7 +290,7 @@ void CSuperString::operator += (const char chrCharacterToAppend)
 // -------------------------------------------------------------------------------- //
 void CSuperString::operator += (const CSuperString& ssStringToAppend)
 {
-
+	
 }
 
 
@@ -452,7 +464,8 @@ CSuperString CSuperString::Reverse()
 CSuperString CSuperString::Left(long lngCharactersToCopy)
 {
 	CSuperString ssLeft;
-	ssLeft = SubString(0, lngCharactersToCopy);
+	ssLeft = Substring(0, lngCharactersToCopy);
+	
 	return ssLeft;
 	
 }
@@ -508,35 +521,26 @@ CSuperString CSuperString::Right(long lngCharactersToCopy)
 // -------------------------------------------------------------------------------- //
 CSuperString CSuperString::Substring(long lngStart, long lngSubStringLength)
 {
-
-	char* pstrLeft = 0;
-	long lngLength = 0;
-
-	// check your bounds
-	lngLength = Length();
-	if (lngCharactersToCopy < 0)
-	{
-		lngCharactersToCopy = 0;
-	}
-	if (lngCharactersToCopy > lngLength)
-	{
-		lngCharactersToCopy = lngLength;
-	}
-
+	CSuperString pstrSubstring = 0;
 
 	// make some space 
-	pstrLeft = new char[lngCharactersToCopy + 1];
+	pstrSubstring.m_pstrSuperString = new char[lngSubStringLength + 1];
+	pstrSubstring.m_pstrSuperString = m_pstrSuperString.subtr(lngStart, lngSubStringLength);
+	
+	//for (int intIndex = lngStart; intIndex <= lngSubStringLength; intIndex ++)
+	//{
 
-	// copy the proper amount of characters - str N <--- copies "n" number of chars
-	strncpy_s(pstrLeft, lngCharactersToCopy + 1, m_pstrSuperString, lngCharactersToCopy);
+	//	//*(pstrSubstring.m_pstrSuperString + intIndex) = *(m_pstrSuperString + intIndex);
+	//}
 
+	//trSubstring = pstrSubstring.substr(lngStart, lngSubStringLength).ToString();
 
 	//clean up and assign
-	ssLeft.CleanUp();
-	ssLeft.m_pstrSuperString = pstrLeft;
+	pstrSubstring.CleanUp();
+	//pstrSubstring.m_pstrSuperString = pstrSubstring;
 
 
-	return pstrLeft;
+	return pstrSubstring;
 }
 
 
@@ -687,7 +691,10 @@ long CSuperString::Length() const
 // -------------------------------------------------------------------------------- //
 void CSuperString::DeepCopy (const char* pstrSource)
 {
-	m_pstrSuperString = CloneString(pstrSource);
+	char* pstrCopyOfSource = 0;
+	pstrCopyOfSource = CloneString(pstrSource);
+	CleanUp();
+	m_pstrSuperString = pstrCopyOfSource;
 }
 	
 

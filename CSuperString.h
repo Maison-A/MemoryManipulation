@@ -53,10 +53,11 @@ public:
 	long Length() const;
 
 	// Assignment Operators
-	void operator = (const char chrLetterToCopy);
-	void operator = (const char* pstrStringToCopy);
-	void operator = (const CSuperString& ssStringToCopy);
-	
+	//void operator = (const char chrLetterToCopy);
+	CSuperString &operator = (const char chrLetterToCopy);
+	CSuperString &operator = (const char* pstrStringToCopy);
+	//void operator = (const CSuperString& ssStringToCopy);
+	CSuperString &operator = (const CSuperString& ssStringToCopy);
 	// Extra credit for numeric parameters
 
 	// Concatenate operator
@@ -66,12 +67,12 @@ public:
 	
 	// Extra credit for numeric parameters
 
-	friend CSuperString operator + (const CSuperString& ssLeft,
-		const CSuperString& ssRight);
-	friend CSuperString operator + (const char* pstrLeftSide,
-		const CSuperString& ssRightString);
-	friend CSuperString operator + (const CSuperString& ssLeftString,
-		const char* pstrRightSide);
+	//friend CSuperString operator + (const CSuperString& ssLeft,
+	//	const CSuperString& ssRight);
+	//friend CSuperString operator + (const char* pstrLeftSide,
+	//	const CSuperString& ssRightString);
+	//friend CSuperString operator + (const CSuperString& ssLeftString,
+	//	const char* pstrRightSide);
 
 	long FindFirstIndexOf(const char chrLetterToFind);
 	long FindFirstIndexOf(const char chrLetterToFind, long lngStartIndex);
