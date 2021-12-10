@@ -17,16 +17,6 @@ public:
 protected:
 	// class level properties to track pointers
 	char* m_pstrSuperString;
-	//char* m_pstrToUpperCase;
-	//char* m_pstrToLowerCase;
-	//char* m_pstrTrimLeft;
-	//char* m_pstrTrimRight;
-	//char* m_pstrLeft;
-	//char* m_pstrRight;
-	// must solve
-	//char* m_pstrLeftN;
-	//CQueue<char*> m_queReturns;
-
 
 private:
 
@@ -34,9 +24,6 @@ private:
 public:
 	// Constructors
 	CSuperString();
-	// Parameterized/Copy constructors
-	// CSuperString ssBuffer( "I Love Star Trek" );
-	// CSuperString ssBuffer( 3.14159f );
 	CSuperString(const char* pstrStringToCopy);
 	CSuperString(const bool blnBooleanToCopy);
 	CSuperString(const char chrLetterToCopy);
@@ -53,12 +40,11 @@ public:
 	long Length() const;
 
 	// Assignment Operators
-	//void operator = (const char chrLetterToCopy);
 	CSuperString &operator = (const char chrLetterToCopy);
 	CSuperString &operator = (const char* pstrStringToCopy);
-	//void operator = (const CSuperString& ssStringToCopy);
+	
 	CSuperString &operator = (const CSuperString& ssStringToCopy);
-	// Extra credit for numeric parameters
+
 
 	// Concatenate operator
 	void operator += (const char* pstrStringToAppend);
@@ -86,23 +72,19 @@ public:
 	// cout << ssBuffer.ToString( ) << endl;		// I Love Star Trek
 	// cout << ssBuffer.ToUpperCase( ) << endl;	// I LOVE STAR TREK
 	// cout << ssBuffer.ToString( ) << endl;		// I Love Star Trek
-	// const char* ToUpperCase();
+
 	CSuperString ToUpperCase();
-	// const char* ToLowerCase();
 	CSuperString ToLowerCase();
 	CSuperString TrimLeft();
 	CSuperString TrimRight();
 	CSuperString Trim();
 	CSuperString Reverse();
 
-	//const char* Left(long lngCharactersToCopy);
+	
 	CSuperString Left(long lngCharactersToCopy);
-	//const char* Right(long lngCharactersToCopy);
 	CSuperString Right(long lngCharactersToCopy);
-	//const char* Substring(long lngStart, long lngSubStringLength);
 	CSuperString Substring(long lngStart, long lngSubStringLength);
 
-	//const char* Replace(char chrLetterToFind, char chrReplace);
 	CSuperString Replace(char chrLetterToFind, char chrReplace);
 	
 	// Hard
@@ -122,8 +104,7 @@ public:
 	float ToFloat();
 	double ToDouble();
 	void Print(const char* pstrCaption) const;
-	// cin >> ssBuffer;
-	// cout << ssBuffer;
+
 	//friend ostream &operator << (ostream &osOut, const CSuperString& ssOutput);
 	//friend istream &operator >> (istream &isIn, CSuperString& ssInput);
 	// Don’t forget the comparison operators!!!

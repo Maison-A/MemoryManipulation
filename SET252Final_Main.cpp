@@ -31,6 +31,7 @@ using namespace std;
 void ConstructorTests();
 void ConstCharReturns();
 void ToDataTypeTests();
+void IndexReturns();
 // --------------------------------------------------------------------------- //
 //									MAIN
 // --------------------------------------------------------------------------- //
@@ -47,6 +48,9 @@ void main()
 
 	ConstCharReturns();
 
+	cout << endl;
+
+	IndexReturns();
 
 
 
@@ -164,11 +168,38 @@ void ConstCharReturns()
 	cout << "2: ToLowerCase -> '" << ssSource1.ToLowerCase().ToString() << "'" << endl;
 	cout << endl;
 	ssSource1 = ssSource1.ToUpperCase();
-	cout << "Self assignment: " << ssSource1.ToString() << endl;
+	cout << "Self assignment (to upper case): " << ssSource1.ToString() << endl;
 	cout << "3a: Left(4) -> '" << ssSource1.Left(4).ToString() << "'" << endl;
-	//cout << "3b: Left(7) -> '" << ssSource1.Left(7).ToString() << "'" << endl;
-	//cout << "4a: Right(7) -> '" << ssSource1.Right(6).ToString() << "'" << endl;
+	cout << "3b: Left(7) -> '" << ssSource1.Left(7).ToString() << "'" << endl;
+	cout << "4a: Right(6) -> '" << ssSource1.Right(6).ToString() << "'" << endl;
+	cout << ": Reverse -> '" << ssSource1.Reverse().ToString() << "'" << endl;
+	ssSource1 = ssSource1.ToLowerCase();
+	cout << "Self assignment (to lower case): " << ssSource1.ToString() << endl;
 	//cout << "4b: Right(2) -> '" << ssSource1.Right(2).ToString() << "'" << endl;
 	cout << "x: Original assigned to self -> '"  << endl;
 
 }
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: ConstCharReturns
+// Abstract: test methods that return const char*
+// -------------------------------------------------------------------------------- //
+void IndexReturns()
+{
+	CSuperString ssSource1 = "I Love Tarkov";
+	
+
+	cout << "Index Return Tests" << endl;
+	cout << "---------------------------" << endl;
+	ssSource1 = ssSource1.ToLowerCase();
+	cout << "Self assignment (to lower case): " << ssSource1.ToString() << endl;
+	cout << "1: Find First Index Of('o') -> '" << ssSource1.FindFirstIndexOf('o') << "'" << endl;
+	cout << endl;
+	cout << "2: Find First Index Of('v',5) -> '" << ssSource1.FindFirstIndexOf('v', 5) << "'" << endl;
+	cout << endl;
+
+
+}
+
