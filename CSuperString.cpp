@@ -10,7 +10,6 @@
 #include <iostream>
 #include <algorithm>
 #include <string.h>
-//#include <bits/stdc++.h>
 #include "CQueue.h"
 
 using namespace std;
@@ -313,36 +312,26 @@ void CSuperString::operator += (const char chrCharacterToAppend)
 {
 	char* pstrAppendedString = 0;
 	long lngIndex = 0;
-	long lngLengthOfOriginal = 0;
-	long lngLengthToAppend = 0;
-	long lngLengthOfBoth = 0;
+	long lngLength = Length();
 
-	lngLengthOfOriginal = this->Length();
-	lngLengthOfBoth = lngLengthOfOriginal + 1;
-
-	// make a new char*
-	pstrAppendedString = new char[lngLengthOfBoth + 1];
-
-	// copy first half from old to new
-	for (lngIndex = 0; lngIndex < lngLengthOfOriginal; lngIndex += 1)
-	{
-		*(pstrAppendedString + lngIndex) = *(m_pstrSuperString + lngIndex);
-
-	}
-
-	// copy second half
-	for (lngIndex = lngIndex; lngIndex < lngLengthOfBoth; lngIndex += 1)
-	{
-		*(pstrAppendedString + lngIndex + 1) = chrCharacterToAppend;
-	}
-
-	DeepCopy(pstrAppendedString);
-	CleanUp();
-	*m_pstrSuperString = *pstrAppendedString;
+	// make space for new char*
+	pstrAppendedString = new char[lngLength + 2];
 	
-	// delete old pointer and reset
-	//delete[]pstrAppendedString;
-	//pstrAppendedString = 0;
+	// copy the original instance to new pitner
+	strcpy((pstrAppendedString), m_pstrSuperString);
+	
+	// set copied value's final index to appended char
+	pstrAppendedString[lngLength] = chrCharacterToAppend;
+
+	// null terminate
+	pstrAppendedString[lngLength + 1] = '\0';
+
+	// clean up old instance
+	CleanUp();
+
+	// deep copy new instance 
+	DeepCopy(pstrAppendedString);
+	
 }
 
 
@@ -351,48 +340,98 @@ void CSuperString::operator += (const char chrCharacterToAppend)
 // Name: operator += 
 // Abstract: Concatenate operator
 // -------------------------------------------------------------------------------- //
-void CSuperString::operator += (const CSuperString& ssStringToAppend)
+void CSuperString::operator += (const CSuperString &ssStringToAppend)
 {
 	char* pstrAppendedString = 0;
 	long lngIndex = 0;
-	long lngLengthOfOriginal = 0;
-	long lngLengthToAppend = 0;
-	long lngLengthOfBoth = 0;
+	long lngLength = Length();
+	long lngToAppendLength = ssStringToAppend.Length();
+	char array1[] = "The dog jumps ";
+	char array2[] = "over the log";
+	pstrAppendedString = new char[lngLength + lngToAppendLength + 1];
+	strcpy(pstrAppendedString, m_pstrSuperString);
+	strcat(pstrAppendedString, ssStringToAppend.m_pstrSuperString);
 
-	// CSuperString CopyOfStringToAppend;
-	// CopyOfStringToAppend = CloneString(ssStringToAppend);
-
-	lngLengthToAppend = ssStringToAppend.Length();
-	lngLengthOfOriginal = this->Length();
-	lngLengthOfBoth = lngLengthOfOriginal + lngLengthToAppend;
-
-	// make a new char*
-	pstrAppendedString = new char[lngLengthOfBoth + 1];
-
-	// copy first half from old to new
-	for (lngIndex = 0; lngIndex < lngLengthOfOriginal; lngIndex += 1)
-	{
-		*(pstrAppendedString + lngIndex) = *(m_pstrSuperString + lngIndex);
-
-	}
-
-	// copy second half
-	for (lngIndex = lngIndex; lngIndex < lngLengthOfBoth; lngIndex += 1)
-	{
-		*(pstrAppendedString + lngIndex + 1) = *(ssStringToAppend.m_pstrSuperString + lngIndex);
-	}
-	
+	CleanUp();
 	DeepCopy(pstrAppendedString);
-	//CleanUp();
-
-	//*m_pstrSuperString = *pstrAppendedString;
-	// delete old pointer and reset
-	delete[]pstrAppendedString;
-	pstrAppendedString = 0;
 
 }
 
 
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //	
+CSuperString operator + (const CSuperString& ssLeft, const CSuperString& ssRight)
+{
+	CSuperString ssNew;
+	ssNew.CleanUp();
+	ssNew = strcat(ssLeft.m_pstrSuperString, ssRight.m_pstrSuperString);
+
+	return ssNew;
+}
+
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //	
+CSuperString operator + (const char* pstrLeftSide, const CSuperString& ssRightString)
+{
+	CSuperString ssNew;
+	ssNew.CleanUp();
+	ssNew.DeepCopy(pstrLeftSide);
+
+	strcat(ssNew.m_pstrSuperString, ssRightString.m_pstrSuperString);
+
+	return ssNew;
+}
+
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: 
+// Abstract: 
+// -------------------------------------------------------------------------------- //	
+CSuperString operator + (const CSuperString& ssLeftString, const char* pstrRightSide)
+{
+	CSuperString ssTemp;
+	CSuperString ssNew;
+	ssTemp.CleanUp();
+
+	ssTemp.DeepCopy(pstrRightSide);
+	ssNew.DeepCopy(ssLeftString.m_pstrSuperString);
+	strcat(ssNew.m_pstrSuperString, ssTemp.m_pstrSuperString);
+
+	return ssNew;
+}
+
+
+// -------------------------------------------------------------------------------- //
+// Name: operator <<
+// Abstract: inject superstring into the string buffer
+// -------------------------------------------------------------------------------- //
+ostream& operator << (ostream& osOut, const CSuperString& ssOutput)
+{
+	osOut.write(ssOutput.ToString(), ssOutput.Length());
+
+	return osOut;
+}
+
+
+// -------------------------------------------------------------------------------- //
+// Name: operator >>
+// Abstract: 
+// -------------------------------------------------------------------------------- //
+istream& operator >> (istream& isIn, CSuperString& ssInput)
+{
+	isIn.getline(ssInput.m_pstrSuperString, ssInput.Length());
+
+	return isIn;
+}
 
 #pragma endregion
 
@@ -411,6 +450,7 @@ long CSuperString::FindFirstIndexOf(const char chrLetterToFind)
 		if (*(m_pstrSuperString + intIndex) == chrLetterToFind)
 		{
 			lngIndexOf = intIndex;
+			// break on first found index
 			break;
 		}
 	}
@@ -422,7 +462,7 @@ long CSuperString::FindFirstIndexOf(const char chrLetterToFind)
 
 // -------------------------------------------------------------------------------- //
 // Name: FindFirstIndexOf
-// Abstract: 
+// Abstract: find index of given char after specific index
 // -------------------------------------------------------------------------------- //
 long CSuperString::FindFirstIndexOf(const char chrLetterToFind, long lngStartIndex)
 {
@@ -431,9 +471,10 @@ long CSuperString::FindFirstIndexOf(const char chrLetterToFind, long lngStartInd
 	
 	for (int intIndex = lngStartIndex; intIndex <= lngLength; intIndex++)
 	{
-		if (*(m_pstrSuperString + intIndex) == chrLetterToFind)
+		if (*(this->m_pstrSuperString + intIndex) == chrLetterToFind)
 		{
 			lngIndexOf = intIndex;
+			// break once first index is found
 			break;
 		}
 	}
@@ -445,7 +486,7 @@ long CSuperString::FindFirstIndexOf(const char chrLetterToFind, long lngStartInd
 
 // -------------------------------------------------------------------------------- //
 // Name: FindLastIndexOf
-// Abstract: 
+// Abstract: Find the first index of a character given
 // -------------------------------------------------------------------------------- //
 long CSuperString::FindLastIndexOf(const char chrLetterToFind)
 {
@@ -454,9 +495,10 @@ long CSuperString::FindLastIndexOf(const char chrLetterToFind)
 
 	for (int intIndex = lngLength; intIndex >= 0; intIndex--)
 	{
-		if (m_pstrSuperString[intIndex] == chrLetterToFind)
+		if (*(m_pstrSuperString + intIndex) == chrLetterToFind)
 		{
 			lngIndexOf = intIndex;
+			// ignore break and continue returning latest index
 		}
 	}
 
@@ -466,50 +508,220 @@ long CSuperString::FindLastIndexOf(const char chrLetterToFind)
 
 
 // -------------------------------------------------------------------------------- //
-// Name: 
-// Abstract: 
+// Name: FindFirstIndexOf
+// Abstract: find and return the first index of the given substring
 // -------------------------------------------------------------------------------- //
 long CSuperString::FindFirstIndexOf(const char* pstrSubStringToFind)
 {
-	long lngIndexOf = 0;
+	long lngFirstIndexOf = 0;
+	int intIndex = 0;
+	long lngFirstCharToFindIndex = 0;
+	long lngLastCharToFindIndex = 0;
+
+	long lngSubstringStartIndex = 0;
+	long longSubstringEndIndex = 0;
+	
 	long lngLength = Length();
-	char* pstrCompareMe = 0;
-	//CSuperString pstrCompareMe;
+	long lngSubStringLength = 0;
+	
+	char* pstrFirstLetterOfSubstring;
+	
+	
+	CSuperString ssBuffer;
+	CSuperString ssBuffer2;
 
-	for (int intIndex = 0; intIndex <= lngLength; intIndex++)
+	
+	// clean up old mem 
+	ssBuffer.CleanUp();
+	
+	// set buffer as string
+	ssBuffer.DeepCopy(m_pstrSuperString);
+	
+	// clean up old mem
+	ssBuffer2.CleanUp();
+
+	// set size of first letter to find
+	pstrFirstLetterOfSubstring = new char[2];
+
+	// get first letter of pstrSubstringToFind
+	strncpy(pstrFirstLetterOfSubstring, pstrSubStringToFind, 1);
+	
+	// find first index of that letter in the string - set that index as start index
+	lngFirstCharToFindIndex = ssBuffer.FindFirstIndexOf(*pstrFirstLetterOfSubstring);
+
+	// find index of final letter in string - set as end index
+	lngLastCharToFindIndex = (strlen(pstrSubStringToFind) + 1);
+
+	ssBuffer2 = ssBuffer.Substring(lngFirstCharToFindIndex, lngLastCharToFindIndex);
+	
+	// cout << "test: " << ssBuffer2.ToString();
+	// check if substrings match - if not return error message and set to 0
+	if (strcmp(ssBuffer2.m_pstrSuperString, pstrSubStringToFind) == 0)
 	{
-		*pstrCompareMe = *(m_pstrSuperString + intIndex);
-		*(m_pstrSuperString + intIndex) += *(m_pstrSuperString + intIndex + 1);
-		
-		if (pstrCompareMe == pstrSubStringToFind)
-		{
-			lngIndexOf = intIndex;
-		}
+		lngFirstIndexOf = lngFirstCharToFindIndex;
 	}
+	else
+	{
+		cout << "COULD NOT FIND SUBSTRING GIVEN" << endl;
+		lngFirstIndexOf = 0;
+	}
+	ssBuffer.CleanUp();
+	ssBuffer2.CleanUp();
 
-	return lngIndexOf;
+	delete[] pstrFirstLetterOfSubstring;
+	pstrFirstLetterOfSubstring = 0;
+
+
+	
+	return lngFirstIndexOf;
 }
 
 
 
 // -------------------------------------------------------------------------------- //
-// Name: 
+// Name: FindFirstIndexOf
 // Abstract: 
 // -------------------------------------------------------------------------------- //
 long CSuperString::FindFirstIndexOf(const char* pstrSubStringToFind, long lngStartIndex)
 {
-	return 0;
+	long lngFirstIndexOf = 0;
+	int intIndex = 0;
+	long lngFirstCharToFindIndex = 0;
+	long lngLastCharToFindIndex = 0;
+
+	long lngSubstringStartIndex = 0;
+	long longSubstringEndIndex = 0;
+
+	long lngLength = Length();
+	long lngSubStringLength = 0;
+
+	char* pstrFirstLetterOfSubstring;
+
+
+	CSuperString ssBuffer;
+	CSuperString ssBuffer2;
+
+
+	// clean up old mem 
+	ssBuffer.CleanUp();
+
+	// set buffer as string
+	ssBuffer.DeepCopy(m_pstrSuperString);
+
+	// clean up old mem
+	ssBuffer2.CleanUp();
+
+	// set size of first letter to find
+	pstrFirstLetterOfSubstring = new char[2];
+
+	// get first letter of pstrSubstringToFind
+	strncpy(pstrFirstLetterOfSubstring, pstrSubStringToFind, 1);
+
+	// find first index of that letter in the string - set that index as start index
+	lngFirstCharToFindIndex = ssBuffer.FindFirstIndexOf(*pstrFirstLetterOfSubstring, lngStartIndex);
+
+	// find index of final letter in string - set as end index
+	lngLastCharToFindIndex = (strlen(pstrSubStringToFind) + 1);
+
+	ssBuffer2 = ssBuffer.Substring(lngFirstCharToFindIndex, lngLastCharToFindIndex);
+
+	// cout << "test: " << ssBuffer2.ToString();
+	// check if substrings match - if not return error message and set to 0
+	
+		if (strcmp(ssBuffer2.m_pstrSuperString, pstrSubStringToFind) == 0)
+		{
+			lngFirstIndexOf = lngFirstCharToFindIndex;
+		}
+		else
+		{
+			cout << "COULD NOT FIND SUBSTRING GIVEN" << endl;
+			lngFirstIndexOf = 0;
+		}
+
+	
+	ssBuffer.CleanUp();
+	ssBuffer2.CleanUp();
+
+	delete[] pstrFirstLetterOfSubstring;
+	pstrFirstLetterOfSubstring = 0;
+
+
+
+	return lngFirstIndexOf;
 }
 
 
 
 // -------------------------------------------------------------------------------- //
-// Name: 
+// Name: FindLastIndexOf
 // Abstract: 
 // -------------------------------------------------------------------------------- //
 long CSuperString::FindLastIndexOf(const char* pstrSubStringToFind)
 {
-	return 0;
+	long lngFirstIndexOf = 0;
+	int intIndex = 0;
+	long lngFirstCharToFindIndex = 0;
+	long lngLastCharToFindIndex = 0;
+
+	long lngSubstringStartIndex = 0;
+	long longSubstringEndIndex = 0;
+
+	long lngLength = Length();
+	long lngSubStringLength = 0;
+
+	char* pstrFirstLetterOfSubstring;
+
+
+	CSuperString ssBuffer;
+	CSuperString ssBuffer2;
+
+
+	// clean up old mem 
+	ssBuffer.CleanUp();
+
+	// set buffer as string
+	ssBuffer.DeepCopy(m_pstrSuperString);
+
+	// clean up old mem
+	ssBuffer2.CleanUp();
+
+	// set size of first letter to find
+	pstrFirstLetterOfSubstring = new char[2];
+
+	// get first letter of pstrSubstringToFind
+	strncpy(pstrFirstLetterOfSubstring, pstrSubStringToFind, 1);
+
+	// find first index of that letter in the string - set that index as start index
+	lngFirstCharToFindIndex = ssBuffer.FindLastIndexOf(*pstrFirstLetterOfSubstring);
+
+	// find index of final letter in string - set as end index
+	lngLastCharToFindIndex = (strlen(pstrSubStringToFind) + 1);
+
+	ssBuffer2 = ssBuffer.Substring(lngFirstCharToFindIndex, lngLastCharToFindIndex);
+
+	// cout << "test: " << ssBuffer2.ToString();
+	// check if substrings match - if not return error message and set to 0
+
+	if (strcmp(ssBuffer2.m_pstrSuperString, pstrSubStringToFind) == 0)
+	{
+		lngFirstIndexOf = lngFirstCharToFindIndex;
+	}
+	else
+	{
+		cout << "COULD NOT FIND SUBSTRING GIVEN" << endl;
+		lngFirstIndexOf = 0;
+	}
+
+
+	ssBuffer.CleanUp();
+	ssBuffer2.CleanUp();
+
+	delete[] pstrFirstLetterOfSubstring;
+	pstrFirstLetterOfSubstring = 0;
+
+
+
+	return lngFirstIndexOf;
 }
 #pragma endregion
 
@@ -557,8 +769,9 @@ CSuperString CSuperString::ToLowerCase()
 // -------------------------------------------------------------------------------- //
 CSuperString CSuperString::TrimLeft()
 {
+	// TODO
 	CSuperString ssTrimLeft;
-	char* pstrTrimLeft = 0;
+
 	
 	
 	
@@ -573,8 +786,8 @@ CSuperString CSuperString::TrimLeft()
 // -------------------------------------------------------------------------------- //
 CSuperString CSuperString::TrimRight()
 {
+	// TODO
 	CSuperString ssTrimRight;
-	char* pstrTrimRight = 0;
 
 
 	return ssTrimRight;
@@ -701,19 +914,18 @@ CSuperString CSuperString::Substring(long lngStart, long lngSubStringLength)
 	{
 		lngSubStringLength = lngLength;
 	}
-
+	
+	ssSubString.CleanUp();
+	
 	// delete old substring
 	DeleteString(pstrSubstring);
 
-	
 	// make some space 
 	pstrSubstring = new char[lngSubStringLength + 1];
-
-	ssSubString.CleanUp();
 	
-	//strncpy(pstrSubstring, (m_pstrSuperString + lngStart), lngSubStringLength);
 
 	// use snprintf since it null terminates unlike strncpy
+	//strncpy(pstrSubstring, (m_pstrSuperString + lngStart), lngSubStringLength);
 	snprintf(pstrSubstring, lngSubStringLength, (m_pstrSuperString + lngStart));
 	ssSubString.DeepCopy(pstrSubstring);
 
@@ -728,8 +940,123 @@ CSuperString CSuperString::Substring(long lngStart, long lngSubStringLength)
 // -------------------------------------------------------------------------------- //
 CSuperString CSuperString::Replace(char chrLetterToFind, char chrReplace)
 {
-	//*(palngValues + intIndex) = lngValue;
-	return 0;
+	CSuperString ssReplace;
+	long lngIndexOfChar = 0;
+	char* pstrTemp = CloneString(m_pstrSuperString);
+	// clear any previous class data
+	ssReplace.CleanUp();
+	// deep copy the original super string to manipulate
+	ssReplace.DeepCopy(m_pstrSuperString);
+	
+	// loop and find/replace every instance of given character
+	for (int intIndex = 0; intIndex <= Length(); intIndex++)
+	{
+		lngIndexOfChar = FindFirstIndexOf(chrLetterToFind, intIndex);
+	
+		if (*(ssReplace.m_pstrSuperString + intIndex) == chrLetterToFind)
+		{
+			*(ssReplace.m_pstrSuperString + intIndex) = chrReplace;
+		}
+	}
+	delete[] pstrTemp;
+	pstrTemp = 0;
+
+	return ssReplace;
+}
+
+
+
+// -------------------------------------------------------------------------------- //
+// Name: Replace
+// Abstract: Replace specified char* with new values: 
+// I want to take the "original" (so deep copy) - find the index of the substring
+// to find, use it's length to replace/strcpy from that index to the end while preserving
+// the rest of the string. 
+// If i want to preserve the rest of the string - i'll have to append the second half of the string 
+// after i'm done replaciong the string to find.
+// so - create a pointer, copy the class string up to the end of the str to find's last char (len)
+// then, create another pointer starting from the end of string to replaces length.
+// then append the two pointers and return as ssReplace
+// -------------------------------------------------------------------------------- //
+CSuperString CSuperString::Replace(const char* pstrFind, const char* pstrReplace)
+{
+	// reference super string
+	CSuperString ssReference;
+	// first half of string
+	CSuperString ssStartBuffer;
+	// chunk of string to replace
+	CSuperString ssImportantPart;	
+	// last half of string
+	CSuperString ssEndBuffer; 
+	// changed total string
+	CSuperString ssChangedString;
+	// string to concatinate then deep copy into final changed super string
+	char* pstrFinalString = 0;
+
+	// indices and lengths
+	long lngIndexToStart = 0;
+	long lngIndexOfChar = 0;
+	long lngIndexOfToFind = 0;
+	long lngToFindLength = strlen(pstrFind);
+	long lngToReplaceLength = strlen(pstrReplace);
+	long lngSubstringStartIndex = 0;
+	long lngTotalLength = 0;
+	// clean up then deep copy to reference string super string
+	ssReference.CleanUp();
+	ssReference.DeepCopy(m_pstrSuperString);
+	
+	// clean up all old or remaining class data
+	ssStartBuffer.CleanUp();
+	ssImportantPart.CleanUp();
+	ssEndBuffer.CleanUp();
+	ssChangedString.CleanUp();
+
+	// find index to start first half of string
+	lngIndexToStart = ssReference.FindFirstIndexOf(pstrFind);
+
+	// copy up to index to find
+	ssStartBuffer = ssReference.Substring(0, lngIndexToStart);
+	//strncpy(ssStartBuffer.m_pstrSuperString, ssReference.m_pstrSuperString, lngIndexToStart);
+
+	// now we have StartBuffer set as first half of string up to string to find
+	// time to copy the string to find in it's own buffer
+	//strcpy(ssImportantPart.m_pstrSuperString, pstrFind);
+	ssImportantPart.DeepCopy(pstrFind);
+
+	// start buffer and old string to change are now in their own buffers - time to get the last half
+	// going to have to set as a substring - but to get a starting position, we need to 
+	// find the total length of the first two strings
+	lngSubstringStartIndex = strlen(ssStartBuffer.m_pstrSuperString) + strlen(ssImportantPart.m_pstrSuperString);
+	
+	// use length of reference string as end index
+	ssEndBuffer = ssReference.Substring(lngSubstringStartIndex, strlen(ssReference.m_pstrSuperString));
+
+	// now replace old string buffer value to string to replace 
+	//strcpy(ssImportantPart.m_pstrSuperString, pstrReplace);
+	ssImportantPart.DeepCopy(pstrReplace);
+
+	// find total length of all values and set space for final string to be deep copied
+	lngTotalLength = strlen(ssStartBuffer.m_pstrSuperString) + strlen(ssImportantPart.m_pstrSuperString) + strlen(ssEndBuffer.m_pstrSuperString);
+	pstrFinalString = new char[lngTotalLength + 1];
+	strcpy(pstrFinalString, ssStartBuffer.m_pstrSuperString);
+	strcat(pstrFinalString, ssImportantPart.m_pstrSuperString);
+	strcat(pstrFinalString, ssEndBuffer.m_pstrSuperString);
+
+	ssChangedString.DeepCopy(pstrFinalString);
+	// now we have all values in their own safe buffers, time to compile them all into one super string
+	//ssChangedString.DeepCopy(ssStartBuffer.m_pstrSuperString);
+	//strcat(ssChangedString.m_pstrSuperString, ssImportantPart.m_pstrSuperString);
+	//strcat(ssChangedString.m_pstrSuperString, ssEndBuffer.m_pstrSuperString);
+
+	// clean up
+	ssStartBuffer.CleanUp();
+	ssImportantPart.CleanUp();
+	ssEndBuffer.CleanUp();
+
+	delete[] pstrFinalString;
+	pstrFinalString = 0;
+
+	return ssChangedString;
 }
 #pragma endregion
 
@@ -925,4 +1252,7 @@ void CSuperString::DeepCopy (const char* pstrSource)
 		}
 		cout << endl;
 	}
+
+
+
 #pragma endregion

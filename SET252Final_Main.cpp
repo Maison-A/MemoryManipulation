@@ -32,12 +32,21 @@ void ConstructorTests();
 void ConstCharReturns();
 void ToDataTypeTests();
 void IndexReturns();
+
+void MuahahahTest1();
+void MuahahahTest2();
 // --------------------------------------------------------------------------- //
 //									MAIN
 // --------------------------------------------------------------------------- //
 
 void main()
 {
+
+
+	IndexReturns();
+
+	cout << endl;
+
 	ConstructorTests();
 	
 	cout << endl;
@@ -50,11 +59,47 @@ void main()
 
 	cout << endl;
 
-	IndexReturns();
+	MuahahahTest1();
+	
+	cout << endl;
+
+	MuahahahTest2();
+	//system("pause");
+	cout << "I made it this far";
+}
 
 
 
-	// cout << "I made it this far";
+
+// -------------------------------------------------------------------------------- //
+// Name: IndexReturns
+// Abstract: test methods that return indices
+// -------------------------------------------------------------------------------- //
+void IndexReturns()
+{
+	CSuperString ssSource1 = "I Love Tarkov";
+	const char* pstrToFind = 0;
+
+	pstrToFind = "tarkov";
+
+	cout << "Index Return Tests" << endl;
+	cout << "---------------------------" << endl;
+	ssSource1 = ssSource1.ToLowerCase();
+	cout << "Self assignment (to lower case): " << ssSource1.ToString() << endl;
+	cout << "1a: Find First Index Of('o') -> '" << ssSource1.FindFirstIndexOf('o') << "'" << endl;
+	cout << endl;
+	cout << "1b: Find First Index Of('v',5) -> '" << ssSource1.FindFirstIndexOf('v', 5) << "'" << endl;
+	cout << endl;
+	cout << "2a: Find Last Index Of('v') -> '" << ssSource1.FindLastIndexOf('v') << "'" << endl;
+	cout << endl;
+	cout << "3: Find Last Index Of(\"tarkov\") -> " << ssSource1.FindLastIndexOf(pstrToFind) << endl;
+	cout << endl;
+	cout << "4a: Find First Index Of(\"tarkov\") -> " << ssSource1.FindFirstIndexOf(pstrToFind) << endl;
+	cout << endl;
+	cout << "4b: Find First Index Of(\"tarkov\", 2) -> " << ssSource1.FindFirstIndexOf(pstrToFind, 2) << endl;
+	cout << endl;
+
+
 }
 
 
@@ -170,36 +215,32 @@ void ConstCharReturns()
 	ssSource1 = ssSource1.ToUpperCase();
 	cout << "Self assignment (to upper case): " << ssSource1.ToString() << endl;
 	cout << "3a: Left(4) -> '" << ssSource1.Left(4).ToString() << "'" << endl;
-	cout << "3b: Left(7) -> '" << ssSource1.Left(7).ToString() << "'" << endl;
+	cout << "3b: Left(7) -> '" << ssSource1.Left(7).ToString() << "'" << " || Double call fix Demonstration (5): " << ssSource1.Left(5).ToString() << endl;
 	cout << "4a: Right(6) -> '" << ssSource1.Right(6).ToString() << "'" << endl;
-	cout << ": Reverse -> '" << ssSource1.Reverse().ToString() << "'" << endl;
+	cout << "4b: Right(2) -> '" << ssSource1.Right(2).ToString() << "'" << endl;
+	cout << "5: Reverse -> '" << ssSource1.Reverse().ToString() << "'" << endl;
 	ssSource1 = ssSource1.ToLowerCase();
 	cout << "Self assignment (to lower case): " << ssSource1.ToString() << endl;
-	//cout << "4b: Right(2) -> '" << ssSource1.Right(2).ToString() << "'" << endl;
-	cout << "x: Original assigned to self -> '"  << endl;
-
-}
-
-
-
-// -------------------------------------------------------------------------------- //
-// Name: ConstCharReturns
-// Abstract: test methods that return const char*
-// -------------------------------------------------------------------------------- //
-void IndexReturns()
-{
-	CSuperString ssSource1 = "I Love Tarkov";
+	cout << "5a: Replace Character (v, x) -> " << ssSource1.Replace('v', 'x').ToString() << endl;
+	cout << "5b: Replace substring (tarkov, star wars) -> " << ssSource1.Replace("tarkov", "star wars").ToString() << endl;
 	
 
-	cout << "Index Return Tests" << endl;
-	cout << "---------------------------" << endl;
-	ssSource1 = ssSource1.ToLowerCase();
-	cout << "Self assignment (to lower case): " << ssSource1.ToString() << endl;
-	cout << "1: Find First Index Of('o') -> '" << ssSource1.FindFirstIndexOf('o') << "'" << endl;
-	cout << endl;
-	cout << "2: Find First Index Of('v',5) -> '" << ssSource1.FindFirstIndexOf('v', 5) << "'" << endl;
-	cout << endl;
-
-
 }
+
+
+
+void MuahahahTest1()
+{
+	CSuperString ssTest;
+	cout << " Muahahah Test #1: " << ssTest << endl;
+}
+
+void MuahahahTest2()
+{
+	CSuperString ssTest = "I Love Star Wars and I Love Star Trek";
+
+	ssTest = ssTest.Replace("Love", "Really Love Love");
+	cout << " Muahahah Test #2: " << ssTest << endl;
+}
+
 
